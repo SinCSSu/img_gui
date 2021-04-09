@@ -18,6 +18,7 @@ public:
     explicit ImgShow(QWidget *parent = nullptr);
     ~ImgShow();
     QByteArray formatPix();
+    int * GetHisArr(int channal);
 
 private:
     Ui::ImgShow *ui;

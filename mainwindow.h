@@ -28,6 +28,9 @@ private:
     Ui::MainWindow *ui;
     void init();
     void show_img(ImgShow *);
+    void open();
+    void save();
+    void getHistogram(int channal);
 
     bool changed = false;
     QStack<ImgShow *> undo_list;

@@ -105,16 +105,72 @@ void Img::getHistogram()
     int his[256] = { 0 };
     if (info->biBitCount == 8)
     {
-        for (int i = 0; i < info->biHeight; i++)
+        cout << "请选择通道：\n1——R 2——G 3——B 4——Gary" << endl;
+        int choice;
+        cin >> choice;
+
+        switch (choice)
         {
-            for (int j = 0; j < info->biWidth; j++)
+        case 1:
+        {
+            for (int i = 0; i < info->biHeight; i++)
             {
-                int pos = (info->biHeight - i - 1) * byteInLine + j;
-                int gray = (int)(colormap[pixmap[pos]].rgbRed * 19595 + colormap[pixmap[pos]].rgbGreen * 38469 + colormap[pixmap[pos]].rgbBlue * 7472) >> 16;
-                his[gray] ++;
-                //cout << gray << endl;
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    //int gray = (int)(colormap[pixmap[pos]].rgbRed * 19595 + colormap[pixmap[pos]].rgbGreen * 38469 + colormap[pixmap[pos]].rgbBlue * 7472) >> 16;
+                    his[colormap[pixmap[pos]].rgbRed] ++;
+                    //cout << gray << endl;
+                }
             }
+            break;
         }
+        case 2:
+        {
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    //int gray = (int)(colormap[pixmap[pos]].rgbRed * 19595 + colormap[pixmap[pos]].rgbGreen * 38469 + colormap[pixmap[pos]].rgbBlue * 7472) >> 16;
+                    his[colormap[pixmap[pos]].rgbGreen] ++;
+                    //cout << gray << endl;
+                }
+            }
+            break;
+        }
+        case 3:
+        {
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    //int gray = (int)(colormap[pixmap[pos]].rgbRed * 19595 + colormap[pixmap[pos]].rgbGreen * 38469 + colormap[pixmap[pos]].rgbBlue * 7472) >> 16;
+                    his[colormap[pixmap[pos]].rgbBlue] ++;
+                    //cout << gray << endl;
+                }
+            }
+            break;
+        }
+
+        case 4:
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    int gray = (int)(colormap[pixmap[pos]].rgbRed * 19595 + colormap[pixmap[pos]].rgbGreen * 38469 + colormap[pixmap[pos]].rgbBlue * 7472) >> 16;
+                    his[gray] ++;
+                    //cout << gray << endl;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+
+
     }
     else
     {
@@ -589,7 +645,7 @@ Img* Img::trueColorto_8_Gray()
                 temp->pixmap[pos_now] = gray;
             }
         }
-    return temp;
+        return temp;
     }
     else
     {

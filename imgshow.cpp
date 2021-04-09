@@ -48,3 +48,118 @@ QByteArray ImgShow::formatPix()
     }
     return (*data);
 }
+
+int * ImgShow::GetHisArr(int channal)
+{
+    int * his = new int[256];
+    memset(his,0,sizeof (int)*256);
+    if (info->biBitCount == 8)
+    {
+        switch (channal)
+        {
+        case 1:
+        {
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    his[colormap[pixmap[pos]].rgbRed] ++;
+                }
+            }
+            break;
+        }
+        case 2:
+        {
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    his[colormap[pixmap[pos]].rgbGreen] ++;
+                }
+            }
+            break;
+        }
+        case 3:
+        {
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    his[colormap[pixmap[pos]].rgbBlue] ++;
+                }
+            }
+            break;
+        }
+
+        case 4:
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j;
+                    int gray = (int)(colormap[pixmap[pos]].rgbRed * 19595 + colormap[pixmap[pos]].rgbGreen * 38469 + colormap[pixmap[pos]].rgbBlue * 7472) >> 16;
+                    his[gray] ++;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        switch (channal)
+        {
+        case 1:
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j * 3;
+                    int gray = (int)(pixmap[pos + 2]);
+                    his[gray] ++;
+                }
+            }
+            break;
+        case 2:
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j * 3;
+                    int gray = (int)(pixmap[pos + 1]);
+                    his[gray] ++;
+                }
+            }
+            break;
+        case 3:
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j * 3;
+                    int gray = (int)(pixmap[pos]);
+                    his[gray] ++;
+                }
+            }
+            break;
+        case 4:
+            for (int i = 0; i < info->biHeight; i++)
+            {
+                for (int j = 0; j < info->biWidth; j++)
+                {
+                    int pos = (info->biHeight - i - 1) * byteInLine + j * 3;
+                    int gray = (int)(pixmap[pos + 2] * 19595 + pixmap[pos + 1] * 38469 + pixmap[pos] * 7472) >> 16;
+                    his[gray] ++;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    return his;
+}
