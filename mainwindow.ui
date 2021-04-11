@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>595</width>
-    <height>421</height>
+    <width>1059</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,8 +87,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>595</width>
-     <height>23</height>
+     <width>1059</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -97,7 +97,6 @@
     </property>
     <addaction name="actionopen_2"/>
     <addaction name="actionsave"/>
-    <addaction name="actionsave_as"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -113,7 +112,6 @@
      <addaction name="actionB_channel"/>
      <addaction name="actionGray"/>
     </widget>
-    <addaction name="actionInfomation"/>
     <addaction name="menu_Histogram"/>
     <addaction name="actionpattle"/>
    </widget>

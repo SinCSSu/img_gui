@@ -3,11 +3,13 @@
 
 #include <QMainWindow>
 #include <QImage>
+#include <QMap>
 #include <QPixmap>
 #include <QStack>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QStringList>
+#include <QtCharts>
 #include "imgshow.h"
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +35,9 @@ private:
     void getHistogram(int channal);
     void undo();
     void redo();
+    void additem(QString mess);
+    void action();
+    void getPattle();
 
     bool changed = false;
     QStack<ImgShow *> undo_list;
