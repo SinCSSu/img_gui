@@ -31,6 +31,8 @@ private:
     void open();
     void save();
     void getHistogram(int channal);
+    void undo();
+    void redo();
 
     bool changed = false;
     QStack<ImgShow *> undo_list;

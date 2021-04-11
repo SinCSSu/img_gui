@@ -29,6 +29,10 @@ void MainWindow::init()
     header << "key" << "value";
     ui->tableWidget->setHorizontalHeaderLabels(header);
 
+    ui->tableWidget_2->setColumnCount(1);
+    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget_2->setSelectionMode(QAbstractItemView::NoSelection);
+    ui->tableWidget_2->horizontalHeader()->setVisible(false);
 
     show_now = new ImgShow;
 
@@ -44,8 +48,6 @@ void MainWindow::show_img(ImgShow *img)
     QPixmap pix = QPixmap::fromImage(img_raw);
     pix = pix.scaled(1024,1024,Qt::KeepAspectRatio,Qt::SmoothTransformation);
     ui->label->setPixmap(pix);
-
-    ui->listWidget->clear();
 
     ui->tableWidget->clear();
     ui->tableWidget->setRowCount(4);
@@ -80,8 +82,6 @@ void MainWindow::show_img(ImgShow *img)
     temp = new QTableWidgetItem;
     temp->setText(QString::number(img->info->biBitCount));
     ui->tableWidget->setItem(3,1,temp);
-
-
 }
 
 void MainWindow::open()
@@ -144,6 +144,7 @@ void MainWindow::save()
         if(show_now->save(save_path.toStdString()))
         {
             QMessageBox::information(NULL,"成功","保存成功！");
+            ui->listWidget->addItem("保存");
         }
         else
         {
@@ -159,5 +160,14 @@ void MainWindow::save()
 
 void MainWindow::getHistogram(int channal)
 {
+}
 
+void MainWindow::undo()
+{
+    if(undo_list.size()>0)
+    {
+        redo_list.push(show_now);
+        show_now = undo_list.pop();
+        ui->listWidget->addItem("撤销");
+    }
 }

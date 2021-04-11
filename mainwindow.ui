@@ -15,9 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,10,1,1" columnstretch="1,10,5,1">
-    <item row="3" column="1">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
     <item row="1" column="3">
      <spacer name="horizontalSpacer_2">
       <property name="orientation">
@@ -79,6 +76,9 @@
        <string/>
       </property>
      </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QTableWidget" name="tableWidget_2"/>
     </item>
    </layout>
   </widget>
