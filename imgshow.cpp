@@ -1,16 +1,23 @@
 #include "imgshow.h"
 #include "ui_imgshow.h"
 
-ImgShow::ImgShow(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ImgShow)
-{
-    ui->setupUi(this);
-}
+ImgShow::ImgShow()
+{}
 
-ImgShow::~ImgShow()
+ImgShow::ImgShow(Img img)
 {
-    delete ui;
+    this->header = new BITMAPFILEHEADER;
+    this->header = img.header;
+    this->info = new BITMAPINFOHEADER;
+    this->info = img.info;
+    if(img.colormap)
+    {
+        this->colormap = new RGBQUAD[(int)pow(2,info->biBitCount)];
+        memcpy(this->colormap,img.colormap,sizeof(RGBQUAD) * (int)pow(2,info->biBitCount));
+    }
+    this->byteInLine = img.byteInLine;
+    pixmap = new unsigned char[info->biHeight * byteInLine];
+    memcpy(pixmap,img.pixmap,info->biHeight * byteInLine);
 }
 
 QByteArray ImgShow::formatPix()

@@ -4,24 +4,19 @@
 #include <QWidget>
 #include <QPainter>
 #include <QDebug>
+#include <cmath>
 #include <Img.h>
 
-namespace Ui {
-class ImgShow;
-}
-
-class ImgShow : public QWidget,public Img
+class ImgShow : public Img
 {
-    Q_OBJECT
-
 public:
-    explicit ImgShow(QWidget *parent = nullptr);
-    ~ImgShow();
+    ImgShow();
+    ImgShow(Img img);
+    ~ImgShow(){};
     QByteArray formatPix();
     int * GetHisArr(int channal);
 
 private:
-    Ui::ImgShow *ui;
 };
 
 #endif // IMGSHOW_H

@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QtCharts>
+#include <QInputDialog>
 #include "imgshow.h"
 
 QT_BEGIN_NAMESPACE

@@ -126,7 +126,7 @@
      <addaction name="actionto_8bits_colorful"/>
      <addaction name="actionto_8bits_gray"/>
     </widget>
-    <addaction name="actionrevoke"/>
+    <addaction name="actionundo"/>
     <addaction name="actionredo"/>
     <addaction name="separator"/>
     <addaction name="action_Brightness"/>
@@ -203,7 +203,7 @@
     <string>to 8bits gray</string>
    </property>
   </action>
-  <action name="actionrevoke">
+  <action name="actionundo">
    <property name="text">
     <string>undo</string>
    </property>

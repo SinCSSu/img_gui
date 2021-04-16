@@ -524,7 +524,7 @@ Img * Img::trueColorto_8_Color()
 {
     if (info->biBitCount == 24)
     {
-        cout << "处理中，请稍后..." << endl;
+        //cout << "处理中，请稍后..." << endl;
         Img* temp = new Img;
         temp->header = new BITMAPFILEHEADER(*header);
 
@@ -595,6 +595,7 @@ Img * Img::trueColorto_8_Color()
 
             }
         }
+        temp->save("1.bmp");
         return temp;
     }
     else

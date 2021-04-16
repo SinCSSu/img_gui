@@ -182,7 +182,6 @@ void MainWindow::getHistogram(int channal)
     QValueAxis *axisY = new QValueAxis;
     //axisY->setLabelFormat("%d");
     axisY->setRange(0,1);
-
     QChart * chart = new QChart();
     QString title = "Histogram\tchannal " + map[channal];
     chart->setTitle(title);
@@ -210,9 +209,38 @@ void MainWindow::undo()
     if(undo_list.size()>0)
     {
         redo_list.push(show_now);
-        show_now = undo_list.pop();
+        show_now = undo_list.top();
+        undo_list.pop();
+        additem("撤销");
+        if(undo_list.size() == 0)
+        {
+            changed = false;
+        }
+        show_img(show_now);
+    }
+    else
+    {
+        return;
     }
 }
+
+void MainWindow::redo()
+{
+    if(redo_list.size()>0)
+    {
+        undo_list.push(show_now);
+        show_now = redo_list.top();
+        redo_list.pop();
+        additem("重做");
+        show_img(show_now);
+    }
+    else
+    {
+        return;
+    }
+}
+
+
 
 void MainWindow::additem(QString mess)
 {
@@ -273,4 +301,55 @@ void MainWindow::action()
     });
 
     connect(ui->actionpattle,&QAction::triggered,this,&MainWindow::getPattle);
+
+    connect(ui->actionredo,&QAction::triggered,this,&MainWindow::redo);
+
+    connect(ui->actionundo,&QAction::triggered,this,&MainWindow::undo);
+
+    connect(ui->actioninverse,&QAction::triggered,this,[=](){
+        redo_list.empty();
+        undo_list.push(show_now);
+        Img * img = show_now->invertColor();
+        show_now = new ImgShow(*img);
+        show_img(show_now);
+        changed = true;
+        additem("反色");
+    });
+
+    connect(ui->action_Brightness,&QAction::triggered,this,[=](){
+        bool flag;
+        int adj = QInputDialog::getInt(NULL,"亮度调整","请输入调整数值，正为增加负为减小",0,-256,256,1,&flag);
+        if(flag)
+        {
+            redo_list.empty();
+            undo_list.push(show_now);
+            Img * img = show_now->adjust(adj);
+            show_now = new ImgShow(*img);
+            show_img(show_now);
+            changed = true;
+            additem("调整亮度");
+        }
+    });
+
+    connect(ui->actionto_8bits_gray,&QAction::triggered,this,[=](){
+        redo_list.empty();
+        undo_list.push(show_now);
+        Img * img = show_now->trueColorto_8_Gray();
+        show_now = new ImgShow(*img);
+        show_img(show_now);
+        changed = true;
+        additem("转换为8位灰色");
+    });
+
+    connect(ui->actionto_8bits_colorful,&QAction::triggered,this,[=](){
+        redo_list.empty();
+        undo_list.push(show_now);
+        Img * img = show_now->trueColorto_8_Color();
+        show_now = new ImgShow(*img);
+        show_img(show_now);
+        changed = true;
+        additem("转换为8位彩色");
+    });
+
+
 }
